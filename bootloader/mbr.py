@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import struct
-# load addr: 0x7c00, cs=0. OK registers: CS, SS, SP, DL (this one contains the drive letter)
+# load addr: 0x7c00, cs=0. OK registers: CS, SS, SP, DL (this one contains the drive letter), ES:DI (PnP Installation Check Structure (of BBS))
 # mem map: < 0x400: interrupt vector table
 # then < 0x500: BIOS reserved RAM
 
@@ -20,9 +20,6 @@ data = [
 	# hang: [TODO print error]
 	0xcd, 0x18, # int 0x18
 	0x90, # nop
-	# ^ or:
-	#0xf4, # hlt
-	#0xeb, 0xfd, # jmp hang
 	# DAP_header:
 	0x10, # size of DAP
 	0x00, # unused
