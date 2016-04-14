@@ -82,7 +82,7 @@ data = [
 	0x01, 0x50, 0x50, 0x50, 0x00, 0x00, 0x00, 0x00, # starting sector
 ]
 #print("LEN", len(data))
-print("9b", data.index(0x9b))
+#print("9b", data.index(0x9b))
 assert(data.index(0x9b) == 0x5e)
 while len(data) < 0x1B8:
 	data.append(0)
@@ -107,7 +107,7 @@ data += [
 	0x02, 0x00, 0x00, 0x00, # 4 Byte length in sectors.
 ]
 #print("AF", data.index(0xAF))
-assert(data.index(0xAF) == 0x1B8)
+#assert(data.index(0xAF) == 0x1B8)
 #print(len(data))
 while len(data) < 0x1FE:
 	data.append(0)
