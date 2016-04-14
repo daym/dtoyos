@@ -7,18 +7,15 @@ import struct
 # Note: TODO: set up stack. Can't not use one - "int" uses it.
 data = [
 	# set up %ds
-
 	0x8c, 0xc8, # mov %cs -> %ax
 	0x8e, 0xd8, # mov %ax -> %ds
 
 	# set up our moving of ourselves
-
 	0xb9, 0x00, 0x01, # mov $256, %cx
 	0xbb, 0x00, 0x06, # mov $0x0600, %bx
 	0xbe, 0x00, 0x7c, # mov $0x7C00, %si
 
 	# copy_l1: move ourselves from 0x7C00 to 0x0600
-
 	0xe3, 0x0b, # jecxz copy_e1
 	0x8b, 0x04, # mov %ds:(%si), %ax
 	0x89, 0x07, # mov %ax, %ds:(%bx)
@@ -36,7 +33,6 @@ data = [
 	# Note: our code is now located at 0x0600
 
 	# check partition table
-
 	0xb9, 0x04, 0x00, # mov $4, %cx
 	0xbd, 0xbe, 0x07, # mov $0x07be, %bp
 
@@ -61,7 +57,6 @@ data = [
 	0x89, 0x0e, 0x5e, 0x06, # mov %cx, (0x065e)
 
 	# load sectors from disk. Note: max 255 sectors, though we would have space for 1218 sectors starting at 0x7C00.
-
 	0x90, 0x90, # nop nop
 	# ^ or: 0xb2, 0x80, # mov $0x80 -> %dl
 	0xbe, 0x5e - 2, 0x06, # mov $DAP_header -> ds:%si
@@ -72,8 +67,10 @@ data = [
 	# jmp to the loaded sectors. Note that they expect ds:si (MBR partition table entry), ds:bp (same), dx (drive: dl), es:di (Plug&Play).
 	0x89, 0xee, # mov %bp, %si
 	0xea, 0x00, 0x7C, 0x00, 0x00, # jmp 0x0000:0x7C00
+
 	# hang: [TODO print error message]
 	0xcd, 0x18, # int 0x18
+
 	# DAP_header:
 	0x10, # size of DAP
 	0x00, # unused
