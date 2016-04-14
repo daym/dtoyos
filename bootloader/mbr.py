@@ -27,7 +27,7 @@ data = [
 	0xeb, 0xf3, # jmp copy_l1
 
 	# copy_e1: jump to our new place.
-	0xe9, 0x00, 0x8a, # jmp 0x0000:0x7C00 + (copy_e1 - copy_l1)
+	0xe9, 0x00, 0x8a, # jmp 0x0000:0x7C00 + (copy_e2 - copy_l1)
 	# copy_e2:
 
 	# Note: our code is now located at 0x0600
