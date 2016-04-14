@@ -1,0 +1,71 @@
+note: es:di is the PnP Installation Check Structure (of BBS)
+int 18h if you can't boot. Or RETF.
+Partitioning so that there's a separate (< 32 kB) kernel partition. Make the loader load from there. There's also a bootsector there - of sorts.
+Maybe in the future - because of backwards compatibility - move ourselves away from 0x7C00 in order to free it for the secondary boot code.
+Maybe it's possible to just change CS and leave the rest as-is. Probably unsafe.
+
+EDD (disk drive), ESCD (sometimes), Post Memory Manager (sometimes), SMBIOS (system management bios)
+
+https://thiscouldbebetter.wordpress.com/2011/03/17/entering-protected-mode-from-assembly/
+LDT
+GDT
+check bit #2
+interrupts:
+	5 weird key, BOUND instruction failed
+	11h return equipment list
+	14h serial port
+		0 init
+		1 transmit char
+		2 receive char
+		3 status
+	15h misc sys
+		4fh key intercept
+		83h event wait
+		84h read joystick
+		85h sysreq callout
+		86h wait
+		87h move block
+		88h get extended memory size
+		89h switch to protected mode (!!!)
+		e8h 20h get system address map
+	16h keyboard
+		00h read char
+		01h read input status
+		02h read shift status
+		05h read keystroke in keyboard buffer
+		10h read char extended
+		11h read input status extended
+		12h read keyboard shift status extended
+	17h printer
+	18h execute BASIC; Borland memory allocation and paging
+	19h reboot (CLI beforehand)
+	1ah RTC
+		00h read RTC
+		01h set RTC
+		02h read RTC time
+		03h set RTC time
+		04h read RTC date
+		05h set RTC date
+		06h set RTC alarm
+		07h reset RTC alarm
+	1ah PCI
+		AX=B101h PCI installation check
+		B102h find PCI device
+		B103h find PCI class device
+		B106h PCI-Bus specific ops
+		B108h read config Byte
+		B109h read config Word
+		B10Ah read config DWord
+		B10Bh write config Byte
+		B10Ch write config Word
+		B10Dh write config DWord
+		B10Eh get IRQ routing info
+		B10Fh set PCI IRQ
+	1Bh Ctrl-Break handler (called by int 9)
+	1Ch timer tick handler
+	1Dh pointer to video parameter table
+	1Eh pointer to diskette parameter table
+	1Fh pointer to video graphics character table (for high ascii)
+	41h pointer to fixed disk parameter table 1
+	46h pointer to fixed disk parameter table 2
+	4Ah called by RTC for alarm

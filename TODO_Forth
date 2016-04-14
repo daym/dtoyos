@@ -1,0 +1,44 @@
+Set up the stacks.
+	data stack
+	return stack
+	word stack [?] or dictionary
+		flags: immediate, word IMMEDIATE; compile-time
+		lenword, word
+		previous ptr
+		code
+		arguments, if any [opcodes, words, ...]
+Implement Forth REPL in Assembly
+	read words
+	show top of data stack
+	sometimes show top of return stack
+Builtin words:
+	dup
+	read-word
+	print-word
+	+
+	-
+	*
+	<
+	[
+	]
+	div
+	if
+	else
+	: word # compiles until ";" (from input device)
+	:NONAME for anon functions
+	EXECUTE
+	POSTPONE (from input device)
+	' (from input device)
+	( (from input device)
+	@
+	IMMEDIATE
+	LITERAL
+	STATE
+	VARIABLE
+	CONSTANT
+	CREATE
+data tagging:
+	data is either address or immediate.
+	If immediate, bottom 2 bits are 0.
+	Otherwise, contains type code of common types (for speed). If not common, contains 11b.
+Maybe include an assembler!
